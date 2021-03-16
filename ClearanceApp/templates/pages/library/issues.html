@@ -1,0 +1,58 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+        <div class="col-md-12 grid-margin">
+            <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="font-weight-bold mb-0" style = "text-transform:uppercase; font-family: cambria;">Issues</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" method = 'POST'>
+                    {% csrf_token %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong style = 'text-transform:uppercase;'>{{message}}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endfor %}
+              
+                    <div class="form-group">
+                      <label for="exampleInputName1">Full Name</label>
+                      <input type = 'text' value = "{{lb.surname}} {{lb.other_names}}" readonly class = 'form-control' name = 'student'> 
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Matric No</label>
+                      <input type = 'text' value = "{{lb.matric_no}}" readonly class = 'form-control' name = 'matric_no'> 
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Department</label>
+                      <input type = 'text' value = "{{lb.department}}" readonly class = 'form-control' name = 'department'> 
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Comment</label>
+                      {{form.comment}}
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light" type="reset">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div> 
+
+
+{% endblock content %}

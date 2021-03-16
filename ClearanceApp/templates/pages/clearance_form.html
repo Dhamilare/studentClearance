@@ -1,0 +1,116 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="font-weight-bold mb-0" style = "text-transform:uppercase; font-family: cambria;">Clearance Form</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+        <h3 style = 'color:green; font-family:cambria; text-transform:uppercase; text-align:center'>Clearance Form Details</h3>
+       </div>
+      </div>
+    </div>
+                    <div class="row row-sm">
+						<div class="col-md-12 col-xl-12">
+							<div class=" main-content-body-invoice">
+								<div class="card card-invoice">
+									<div class="card-body" id = 'printable'>
+										<div class="invoice-header">
+											<h1 style='text-transform:uppercase; text-align:center' class="invoice-title">Moshood Abiola Polytechnic, Abeokuta</h1>
+                                            <h3 style='text-transform:uppercase;text-align:center' >nd / hnd clearance form</h3>
+										</div><!-- invoice-header -->
+										<div class="table-responsive mg-t-40">
+											<table class="table table-invoice border text-md-nowrap mb-0">
+												<thead>
+                                                {% for cl, hd, bs, lb, so in clearance_details %}
+													<tr>
+														<th class="wd-20p"><b>Full name</b></th>
+														<td class="wd-40p">{{cl.surname}}&nbsp;{{cl.other_names}}</td>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td><b>Department</b></td>
+														<td class="tx-12">{{cl.department}}</td>
+													</tr>
+													<tr>
+														<td><b>Matric No / Reg No</b></td>
+														<td class="tx-12">{{cl.matric_no}}</td>
+													</tr>
+													<tr>
+														<td><b>Level</b></td>
+														<td class="tx-12">{{cl.level}}</td>
+													</tr>
+												</tbody>
+											</table>
+
+                                             <hr style='border:1px solid black'><br>
+
+                                             <h4 style='text-transform:capitalize'>i certify that the above named student has been cleared.</h4><br>
+
+
+                    <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Dept / Unit / Directorate</th>
+                          <th>Officer's Name, Signature & Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td>Department</td>
+                            <td class="tx-12">{{so.staff.first_name}}&nbsp; {{so.staff.last_name}}, &nbsp;{{so.signature}}, &nbsp;{{so.date_signed}}</td>
+                        </tr>
+                        <tr>
+                            <td>School</td>
+                            <td class="tx-12">{{lb.staff.first_name}}&nbsp; {{lb.staff.last_name}}, &nbsp;{{lb.signature}}, &nbsp;{{lb.date_signed}}</td>
+                        </tr>
+                        <tr>
+                            <td>Library</td>
+                            <td class="tx-12">{{bs.staff.first_name}}&nbsp; {{bs.staff.last_name}}, &nbsp;{{bs.signature}}, &nbsp;{{bs.date_signed}}</td>
+                        </tr>
+                        <tr>
+                            <td>Busary</td>
+                            <td class="tx-12">{{cl.staff.first_name}}&nbsp; {{cl.staff.last_name}}, &nbsp;{{cl.signature}}, &nbsp;{{cl.date_signed}}</td>
+                            {% endfor %}
+                        </tr>
+                      </tbody> 
+                    </table>
+                  </div>
+
+                        </div>
+                        <hr class="">
+                        <a class="btn btn-secondary float-right mt-3 ml-2" style='color:#fff' onclick = 'printDiv(printable)'>
+                            <i class="ti-printer mr-1"></i>Print
+                        </a>
+                    </div>
+                        </div>
+                    </div>
+                </div><!-- COL-END -->
+            </div>
+            <script>
+            function printDiv(printable){
+                w = window.open();
+                w.document.write(document.getElementById('printable').innerHTML);
+                w.print();
+                w.close();
+
+            }
+            </script>
+
+
+{% endblock content %}

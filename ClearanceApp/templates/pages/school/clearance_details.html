@@ -1,0 +1,129 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+{% comment %} {% if status %}
+
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="font-weight-bold mb-0" style = "text-transform:uppercase; font-family: cambria;">Awaiting confirmation</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+        <h2 style = 'color:green; font-family:cambria; text-transform:uppercase'>Your clerance is being processed!</h2>
+       </div>
+      </div>
+    </div>
+
+    
+
+     {% else %} {% endcomment %}
+
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="font-weight-bold mb-0" style = "text-transform:uppercase; font-family: cambria;">Awaiting Clerance</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="card-title" style="text-align:center;">Access Student</h3>
+   
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" method = 'POST' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong style = 'text-transform:uppercase;'>{{message}}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endfor %}
+                     <div class="form-group">
+                      <label>Surname</label>
+                      <input class="form-control" value = "{{qs.surname}}" name = "surname" readonly>   
+                    </div>
+                    <div class="form-group">
+                      <label>Other Names</label>
+                       <input class="form-control" value = "{{qs.other_names}}" name = "other_names" readonly>   
+                    </div>
+                    <div class="form-group">
+                      <label>Matric No</label>
+                       <input class="form-control" value = "{{qs.matric_no}}" name = "matric_no" readonly>   
+                    </div>
+                    <div class="form-group">
+                      <label>Gender</label>
+                       <input class="form-control" value = "{{qs.gender}}" name = "gender" readonly>   
+                      </div>
+                    <div class="form-group">
+                      <label>Department</label>
+                       <input class="form-control" value = "{{qs.department}}" name = "department" readonly> 
+                       {{form.errors.department}}  
+                    </div>
+                    <div class="form-group">
+                      <label>Level</label>
+                         <input class="form-control" value = "{{qs.level}}" name = "level" readonly>   
+                    </div>
+
+                    <div class="form-group">
+                      <label>Signature</label>
+                      <input class="form-control" value = "{{request.user.staff.staff_id}}" name = "signature" readonly> 
+                      <small style='color:red; font-family:tahoma;'>Staff ID is meant to replace your signature in accessing this form</small>  
+                    </div>
+
+                    <div class="form-group">
+                      <label>Date</label>
+                         <input class="form-control" value = "{{ans}}" name = "date_signed" readonly> 
+                      <small style='color:red; font-family:tahoma;'>The Date is meant to replace your signature in accessing this form</small>  
+                      {{form.errors.date_signed}} 
+                    </div>
+
+
+                    {% if request.user.staff.office == 'HOD' %}
+
+                    <button type="submit" class="btn btn-primary mr-2">Forward To School Officer</button>
+                     <a href="{% url 'issues' qs.slug %}" style = 'color:#fff; text-decoration:none;' class="btn btn-warning">Have Issues?</a>
+
+                    {% elif request.user.staff.office == 'SCHOOL OFFICER' %}
+
+                    <button type="submit" class="btn btn-primary mr-2">Forward To Library</button>
+                    <a href="{% url 'school_issues' qs.slug %}" style = 'color:#fff; text-decoration:none;' class="btn btn-warning">Have Issues?</a>
+
+                    {% elif request.user.staff.office == 'LIBRARY' %}
+
+                    <button type="submit" class="btn btn-primary mr-2">Forward To Busary</button>
+                    <a href="{% url 'library_issues' qs.slug %}" style = 'color:#fff; text-decoration:none;' class="btn btn-warning" >Have Issues?</a>
+
+                    {% else %}
+
+                    <button type="submit" class="btn btn-primary mr-2">Clear Student</button>
+                    <a href="{% url 'busary_issues' %}" style = 'color:#fff; text-decoration:none;' class="btn btn-warning">Have Issues?</a>
+                   
+                  {% endif %}
+                  </form>
+                </div>
+              </div>
+            </div>
+         
+        </div>
+        {% comment %} {% endif %} {% endcomment %}
+
+{% endblock content %}

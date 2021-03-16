@@ -1,0 +1,76 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+{% block content %}
+
+ <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="font-weight-bold mb-0" style = "text-transform:uppercase; font-family: cambria;">Awaiting Clerance</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  {% comment %} {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong style = 'text-transform:uppercase;'>{{message}}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endfor %} {% endcomment %}
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                      {% comment %} {% if status %} {% endcomment %}
+                        <tr>
+                          <th>S/N</th>
+                          <th>Surname</th>
+                          <th>Other Names</th>
+                          <th>Matric No</th>
+                          <th>Department</th>
+                          <th>Sundry Receipt</th>
+                          <th>Status</th>
+                          <th>Print Clearance</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for stud in results  %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{stud.surname}}</td>
+                          <td>{{stud.other_names}}</td>
+                          <td>{{stud.matric_no}}</td>
+                          <td>{{stud.department}}</td>
+                          <td><button class="btn btn-primary"><a href="{{stud.sundry_receipt.url}}" style = "color:#fff;"><i class="fa fa-download"></i>Download</a></button></td>
+                          {% if cleared %}
+                          <td><label class="badge badge-success" style='text-transform:uppercase'>Cleared</label></td>
+                          {% else %}
+                          <td><label class="badge badge-warning" style='text-transform:uppercase'>Awaiting Approval</label></td>
+                          {% endif %}
+                          {% if cleared %}
+                          <td><a href="{% url 'form_details' stud.slug %}" style = 'text-transform:capitalize; text-decoration:none;'>click to print form</a></td>
+                          {% else %}
+                          <td></td>
+                          {% endif %}
+                        {% endfor %}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{% endblock content %}
+
+
+
